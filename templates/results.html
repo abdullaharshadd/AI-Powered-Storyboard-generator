@@ -8,9 +8,9 @@
 <body>
     <h1>Generated Scenes</h1>
     <ul>
-        {% for scene in scenes %}
-            <li>{{ scene }}</li>
-        {% endfor %}
+        {% for elem in data.data %}
+            <li>{{ elem.scene }}</li>
+            <img src="{{ elem.image }}" alt="Image for Scene {{ loop.index }}" width="{{ data.scenes_width }}" height="{{ data.scenes_height }}">        {% endfor %}
     </ul>
     <a href="/">Back</a>
 </body>

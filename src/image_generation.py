@@ -1,7 +1,4 @@
 from dotenv import dotenv_values
-
-config = dotenv_values(".env")  
-
 from openai import OpenAI
 import json
 
@@ -19,17 +16,24 @@ def generate_images(scenes, size="400x400"):
     story_context = ""
     
     for i, scene in enumerate(scenes):
-        # Append current scene to the story context
-        story_context += f"Scene {i + 1}: {scene}\n"
+        try:
+            # Append current scene to the story context
+            story_context += f"Scene {i + 1}: {scene}\n"
 
-        # Create prompt for the image generation
-        prompt = f"Generate an image for the following scene in a story (Size of the image should be {size}): {scene}.\n\nHere is the context:\n{story_context}\n"
-        response = client.images.generate(
-            model="dall-e-3",
-            prompt=prompt,
-        )
+            # Create prompt for the image generation
+            prompt = f"Generate an image for the following scene in a story (Size of the image should be {size}): {scene}.\n\nHere is the context:\n{story_context}\n"
+            
+            # Generate the image using OpenAI's image generation API
+            response = client.images.generate(
+                model="dall-e-3",
+                prompt=prompt,
+            )
 
-        image_url = response.data[0].url
-        images.append(image_url)
+            image_url = response.data[0].url
+            images.append(image_url)
+
+        except Exception as e:
+            print(f"Error generating image for scene {i + 1}: {str(e)}")
+            images.append(None)  # Append None or handle it in another way if an error occurs
 
     return images

@@ -4,14 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generated Scenes</title>
+    <script>
+        // Check if there is an alert message to display
+        window.onload = function() {
+            const alertMessage = "{{ alert|safe }}";
+            if (alertMessage) {
+                alert(alertMessage);
+            }
+        };
+    </script>
 </head>
 <body>
     <h1>Generated Scenes</h1>
-    <ul>
-        {% for elem in data.data %}
-            <li>{{ elem.scene }}</li>
-            <img src="{{ elem.image }}" alt="Image for Scene {{ loop.index }}" width="{{ data.scenes_width }}" height="{{ data.scenes_height }}">        {% endfor %}
-    </ul>
+
+    {% if data.data %}
+        <ul>
+            {% for elem in data.data %}
+                <li>{{ elem.scene }}</li>
+                <img src="{{ elem.image }}" alt="Image for Scene {{ loop.index }}" width="{{ data.scenes_width }}" height="{{ data.scenes_height }}">
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No scenes were generated.</p>
+    {% endif %}
+    
     <a href="/">Back</a>
 </body>
 </html>

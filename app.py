@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from src.scene_segmentation import segment_text
 from src.image_generation import generate_images
+from src.input_handling import validate_story_and_scenes
 import json
 
 app = Flask(__name__)
@@ -8,6 +9,10 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return render_template('index.html')
+
+@app.route("/generated-stories")
+def generated_stories():
+    return render_template('generated-stories.html');
 
 @app.route('/generate', methods=['POST'])
 def generate():
@@ -17,10 +22,15 @@ def generate():
         scenes_height = int(request.form["scenes_height"])
         scenes_width = int(request.form["scenes_width"])
 
+        can_be = validate_story_and_scenes(description, num_scenes)
+
+        if can_be == 'False':
+            return render_template('results.html', alert="Error: Story cannot be divided into the requested number of scenes.", data={"data": []}), 400
+
         # Try segmenting the text into scenes
         scenes = segment_text(description, num_scenes)
         if scenes is None:
-            return "Error: Unable to segment the text into scenes.", 500
+            return render_template('results.html', alert="Error: Unable to segment the text into scenes.", data={"data": []}), 500
 
         # Strip the whitespace and newlines, then manually convert to a list using string splitting
         scene_list = scenes.strip().strip("[]").split("\n")
@@ -43,7 +53,7 @@ def generate():
             data["scenes_height"] = 400
 
         if not images:
-            return "Error: Image generation failed.", 500
+            return render_template('results.html', alert="Error: Image generation failed.", data={"data": []}), 500
 
         # Populate the data with the scenes and their corresponding images
         for i, scene in enumerate(scene_list):
@@ -56,7 +66,7 @@ def generate():
     
     except Exception as e:
         print(f"Error in /generate: {str(e)}")
-        return f"An error occurred: {str(e)}", 500
+        return render_template('results.html', alert=f"An error occurred: {str(e)}", data={"data": []}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

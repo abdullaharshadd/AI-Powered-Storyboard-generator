@@ -66,11 +66,5 @@ The tool includes error handling for:
 * Sample output storyboards demonstrating the tool's capabilities
 * (Optional) A simple web interface for the tool
 
-## Generated Story 1
-<iframe src="examples/Generated_Scenes1.html" width="600" height="400"></iframe>
-
-## Generated Story 2
-<iframe src="examples/Generated_Scenes2.html" width="600" height="400"></iframe>
-
-## Generated Story 3
-<iframe src="examples/Generated_Scenes3.html" width="600" height="400"></iframe>
+## Generated Stories
+You can go to `/generated-stories` to see example generated stories.

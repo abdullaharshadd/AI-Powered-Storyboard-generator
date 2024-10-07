@@ -21,7 +21,7 @@
         <ul>
             {% for elem in data.data %}
                 <li>{{ elem.scene }}</li>
-                <img src="{{ elem.image }}" alt="Image for Scene {{ loop.index }}" width="{{ data.scenes_width }}" height="{{ data.scenes_height }}">
+                <img src="{{ elem.image }}" alt="Image for Scene {{ loop.index }}">
             {% endfor %}
         </ul>
     {% else %}

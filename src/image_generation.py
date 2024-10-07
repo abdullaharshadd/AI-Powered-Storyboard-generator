@@ -9,7 +9,7 @@ client = OpenAI(
     api_key=config.get("OPENAI_API_KEY"),
 )
 
-def generate_images(scenes, size="400x400"):
+def generate_images(scenes, size):
     images = []
     
     # Initial context for the story
@@ -27,6 +27,7 @@ def generate_images(scenes, size="400x400"):
             response = client.images.generate(
                 model="dall-e-3",
                 prompt=prompt,
+                size=size
             )
 
             image_url = response.data[0].url

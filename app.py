@@ -19,8 +19,8 @@ def generate():
     try:
         description = request.form['description']
         num_scenes = int(request.form['num_scenes'])
-        scenes_height = int(request.form["scenes_height"])
-        scenes_width = int(request.form["scenes_width"])
+        scene_size = request.form['scene_size']
+        print(scene_size)
 
         can_be = validate_story_and_scenes(description, num_scenes)
 
@@ -43,14 +43,7 @@ def generate():
         }
 
         # Try generating images for the scenes
-        if scenes_height is not None and scenes_width is not None:
-            images = generate_images(scene_list, str(scenes_height) + "x" + str(scenes_width))
-            data["scenes_width"] = scenes_width
-            data["scenes_height"] = scenes_height
-        else:
-            images = generate_images(scene_list)
-            data["scenes_width"] = 400
-            data["scenes_height"] = 400
+        images = generate_images(scene_list, scene_size)
 
         if not images:
             return render_template('results.html', alert="Error: Image generation failed.", data={"data": []}), 500

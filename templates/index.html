@@ -65,12 +65,17 @@
         <label for="num_scenes">Number of Shots/Scenes to Generate:</label>
         <input type="number" id="num_scenes" name="num_scenes" min="1" required>
 
-        <label for="scenes_height_label">Height of the generated scenes:</label>
-        <input type="number" id="scenes_height" name="scenes_height" min="100" max="1000" required>
+        <label for="scene_dimensions_label">Select the dimensions for the generated scenes (width x height):</label><br>
 
-        <label for="scenes_width_label">Width of the generated scenes:</label>
-        <input type="text" id="scenes_width" name="scenes_width" style="margin-bottom: 20px;" min="100" max="1000" required>
-
+        <input type="radio" id="size_1024x1024" name="scene_size" value="1024x1024">1024x1024</input>
+        <br>
+        <br>
+        <input type="radio" id="size_1024x1792" name="scene_size" value="1024x1792">1024x1792</input>
+        <br>
+        <br>
+        <input type="radio" id="size_1792x1024" name="scene_size" value="1792x1024">1792x1024</input>
+        <br>
+        <br>
         <button type="submit">Generate Scenes</button>
     </form>
 </div>
